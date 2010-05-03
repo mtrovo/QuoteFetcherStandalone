@@ -1,8 +1,5 @@
 ﻿from urllib import urlopen
-import re
-from django.utils import simplejson
-from models import Company
-from google.appengine.ext import db
+import simplejson
 
 
 ERRORS= {   "FSW-0001":"Este período não é válido.",

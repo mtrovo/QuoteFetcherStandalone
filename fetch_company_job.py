@@ -1,5 +1,4 @@
 ﻿from urllib import urlopen
-import re
 import simplejson
 import quotedao
 
@@ -19,6 +18,7 @@ def main():
         print "%d companies fetched"
     else: 
         print "no companies fetched"
+
 if (__name__=='__main__'):
     main()
  
