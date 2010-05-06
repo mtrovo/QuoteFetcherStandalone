@@ -110,7 +110,6 @@ def insert_quotes(company_code, qs):
         c.close()
         raise
     
-    
 def create_schema():
     schema = fopen('schema.sql').read()
     c = __db.cursor()

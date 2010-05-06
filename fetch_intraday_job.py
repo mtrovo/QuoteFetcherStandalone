@@ -45,7 +45,6 @@ def main():
          if rows_num:
             print '%d quotes saved for company %s' % (rows_num, company)
          else: print 'no quotes saved for company %s' % (company)
-         
 
 if (__name__=='__main__'):
     main()
