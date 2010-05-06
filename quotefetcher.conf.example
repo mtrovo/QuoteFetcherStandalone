@@ -1,0 +1,6 @@
+[Database]
+user = root
+passwd = root
+host = localhost
+db = mtrovo_quotefetcher
+

@@ -14,8 +14,9 @@ def geturl(url):
 def main():
     idtstr = geturl(IDT_LIST_URL)
     idtjson = simplejson.loads(idtstr)
-    if quoteDao.insertCompanies(idtjson['data']):
-        print "%d companies fetched"
+    rows_num = quotedao.insert_companies(idtjson['data'])
+    if rows_num:
+        print "%d companies fetched" % rows_num
     else: 
         print "no companies fetched"
 

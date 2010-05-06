@@ -3,13 +3,13 @@ create table `Company` (
     idt_num SMALLINT(5) not null,
     abv_name VARCHAR(60),
     desc_name VARCHAR(60),
-    complete_name VARCHAR(60),
+    complete_name VARCHAR(200),
     primary key (company_code)
 );
         
 create table `Quote`(
    company_code VARCHAR(10),
-   dat_timestamp datetime,
+   dat_timestamp BIGINT,
    price NUMERIC(5,2),
    low NUMERIC(5,2),
    high NUMERIC(5,2),
