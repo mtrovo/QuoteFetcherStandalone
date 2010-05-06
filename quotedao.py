@@ -2,7 +2,11 @@ import MySQLdb
 
 __INSERT_COMPANY = """INSERT INTO Company (idt_num, company_code, desc_name, complete_name, abv_name)
 VALUES (%d, %s, %s, %s, %s)"""
-__FINDALL_WCOMPANIES = """SELECT A.* 
+__FINDALL_WCOMPANIES = """SELECT A.company_code,
+    A.idt_num,
+    A.abv_name,
+    A.desc_name,
+    A.complete_name
     FROM Company A, WatchedCompany B
     WHERE A.company_code = B.company_code"""
 
@@ -11,6 +15,10 @@ __db = MySQLdb.connect(host="mysql.mtrovo.dreamhosters.com",user="mtrovo",
 
 def __transform_company(comp):
     return [comp['idt'], comp['code'], comp['name'], comp['companyName'], comp['companyAbvName']]
+
+def __transform_quote(q):
+   #TODO: pegar de acordo com os campos definidos no JSON
+   return []
 
 def select_company(code):
     c = __db.cursor()
@@ -35,6 +43,9 @@ def insert_companies(comps):
         c.close()
         raise
 
+def insert_quotes(quotes_dict_list):
+   
+
 def create_schema():
     schema = fopen('schema.sql').read()
     c = __db.cursor()
@@ -53,3 +64,5 @@ def findall_watched_companies():
         c.execute(__FINDALL_WCOMPANIES)
         rows = c.fetchall()
         c.close()
+
+

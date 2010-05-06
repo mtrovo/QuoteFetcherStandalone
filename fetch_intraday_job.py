@@ -28,22 +28,17 @@ def geturl(url):
 
 def main():
     
-   wcompanies = models.WatchedCompany.gql("ORDER BY company")
+   wcompanies = quotedao.findall_watched_companies()
    for wc in wcompanies:
-      company = wc.company
-      idt = company.idt
+      company = wc[0]
+      idt = company[1]
       data = geturl(WS_URL % idt)
       idtjson = simplejson.loads(data)
       err = idtjson['error']
       if err:
          logging.error('Unable to fetch data for campany %s: %s: %s' % (company.code, err, ERRORS[err]))
       else: 
-         for quote in idtjson['data']:
-            q = Quote()
-            q.company = company
-            for att in quote:
-               q.__setattr__(att, quote[att])
-               q.put()
+         quotedao.insert_quotes(idtjson['data'])
 
 if (__name__=='__main__'):
     main()
