@@ -1,5 +1,6 @@
 ﻿from urllib import urlopen
 import simplejson
+import quotedao
 
 
 ERRORS= {   "FSW-0001":"Este período não é válido.",
@@ -28,22 +29,23 @@ def geturl(url):
 
 def main():
     
-   wcompanies = models.WatchedCompany.gql("ORDER BY company")
+   wcompanies = quotedao.findall_watched_companies()
    for wc in wcompanies:
-      company = wc.company
-      idt = company.idt
+      company = wc['company_code']
+      idt = wc['idt_num']
       data = geturl(WS_URL % idt)
       idtjson = simplejson.loads(data)
-      err = idtjson['error']
+      
+      err = idtjson.get('error')
+      
       if err:
          logging.error('Unable to fetch data for campany %s: %s: %s' % (company.code, err, ERRORS[err]))
       else: 
-         for quote in idtjson['data']:
-            q = Quote()
-            q.company = company
-            for att in quote:
-               q.__setattr__(att, quote[att])
-               q.put()
+         rows_num = quotedao.insert_quotes(company, idtjson['data'])
+         if rows_num:
+            print '%d quotes saved for company %s' % (rows_num, company)
+         else: print 'no quotes saved for company %s' % (company)
+         
 
 if (__name__=='__main__'):
     main()
