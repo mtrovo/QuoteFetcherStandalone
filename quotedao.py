@@ -1,8 +1,9 @@
 import MySQLdb
 import ConfigParser
+from os import path
 
 __config = ConfigParser.RawConfigParser()
-__config.read('quotefetcher.conf')
+__config.read(path.join(path.dirname(__file__), 'quotefetcher.conf'))
 
 # INSERT COMPANY STATEMENT
 __INSERT_COMPANY = """INSERT INTO Company (idt_num, company_code, desc_name, complete_name, abv_name)
